@@ -1,5 +1,5 @@
-# express-static-server-template
-Express static server template
+# gemini-nano-template
+Gemini Nano template
 
 ## Install
 ```bash
