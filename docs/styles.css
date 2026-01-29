@@ -68,6 +68,7 @@ body {
   align-self: flex-end;
   background-color: #4285f4;
   color: #fff;
+  white-space: pre-wrap;
 }
 
 .ai-message {
