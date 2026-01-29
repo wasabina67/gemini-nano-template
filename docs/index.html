@@ -7,9 +7,30 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <div>
-      <div>
-      </div>
+    <div class="chat-container">
+      <header class="chat-header">
+        <h1>Gemini Nano template</h1>
+        <div id="status" class="status">Checking...</div>
+      </header>
+      <main id="chat-messages" class="chat-messages">
+        <button id="init-model" class="init-button" style="display: none;">Initialize the model</button>
+      </main>
+      <form id="chat-form" class="chat-form">
+        <input
+          type="text"
+          id="message-input"
+          class="message-input"
+          placeholder="Enter your message..."
+          autocomplete="off"
+          disabled
+        >
+        <button
+          type="submit"
+          id="submit-button"
+          class="submit-button"
+          disabled
+        >Submit</button>
+      </form>
     </div>
     <script src="app.js"></script>
   </body>
