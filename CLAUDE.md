@@ -4,31 +4,40 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A web template demonstrating Google's Gemini Nano language model integration via Chrome's experimental Prompt API. The application provides an on-device AI chat interface with streaming responses.
+A browser-based chat application that integrates with Google's Gemini Nano language model running locally on Chrome via the Chrome Prompt API. No backend AI processing - the model runs entirely on-device.
 
 ## Commands
 
 ```bash
 npm i              # Install dependencies
-node server.js     # Start Express server on http://localhost:3000
+node server.js     # Run server on http://localhost:3000
 ```
-
-No build, test, or lint commands are configured.
 
 ## Architecture
 
-**Backend (`server.js`):** Minimal Express.js static file server serving the `docs/` directory.
+```
+server.js          # Express.js server serving static files from docs/
+docs/
+  index.html       # Main HTML template with CDN imports (DOMPurify, Marked)
+  app.js           # Client-side app: model init, session management, streaming
+  styles.css       # Styling
+```
 
-**Frontend (`docs/`):**
-- `index.html` - Chat UI structure
-- `app.js` - Chrome LanguageModel API integration with streaming responses
-- `styles.css` - Chat interface styling
+**Data Flow:**
+1. Check `LanguageModel` API availability in browser
+2. Create session when model is ready (may require download)
+3. Stream responses via `session.promptStreaming(text)`
+4. Render AI messages as sanitized markdown, user messages as plain text
 
-## Key Technical Details
+## Key Patterns
 
-- Uses Chrome's `LanguageModel` Prompt API (requires Chrome flags enabled)
-- Configured for Japanese language (`ja`)
-- Streaming responses via `session.promptStreaming()`
-- Single session instance pattern
-- Vanilla JavaScript with marked.js for Markdown rendering
-- Multi-line input with Enter to send, Shift+Enter for newline
+- **Security:** AI responses sanitized with DOMPurify before rendering as HTML; user messages use `textContent`
+- **Streaming:** Async iterator pattern for real-time response updates
+- **Model state:** UI reflects checking/unavailable/downloading/ready states
+- **Language:** Hardcoded to Japanese (`ja`) in language options
+
+## Chrome Setup Required
+
+Enable these flags for Gemini Nano:
+- `chrome://flags/#optimization-guide-on-device-model` → Enabled
+- `chrome://flags/#prompt-api-for-gemini-nano-multimodal-input` → Enabled
