@@ -8,8 +8,57 @@ let session = null;
 
 const status = document.getElementById('status');
 const initModelButton = document.getElementById('init-model');
+const chatMessages = document.getElementById('chat-messages');
+const chatForm = document.getElementById('chat-form');
 const messageInput = document.getElementById('message-input');
 const submitButton = document.getElementById('submit-button');
+
+function addMessage(text, isUser) {
+  const messageDiv = document.createElement('div');
+  messageDiv.className = isUser ? 'message user-message' : 'message ai-message';
+  messageDiv.textContent = text;
+  chatMessages.appendChild(messageDiv);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+  return messageDiv;
+}
+
+async function handleSubmit(e) {
+  e.preventDefault();
+
+  const text = messageInput.value.trim();
+  if (!text || !session) return;
+
+  addMessage(text, true);
+  messageInput.value = '';
+  messageInput.disabled = true;
+  submitButton.disabled = true;
+
+  const responseDiv = addMessage('', false);
+
+  try {
+    const stream = session.promptStreaming(text);
+    for await (const chunk of stream) {
+      responseDiv.textContent += chunk;
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+  } catch (error) {
+    responseDiv.textContent = 'Error: ' + error.message;
+    console.error(error);
+  } finally {
+    messageInput.disabled = false;
+    submitButton.disabled = false;
+    messageInput.focus();
+  }
+}
+
+chatForm.addEventListener('submit', handleSubmit);
+
+messageInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    chatForm.dispatchEvent(new Event('submit'));
+  }
+});
 
 async function createSession() {
   status.textContent = 'Initializing...';
