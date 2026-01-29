@@ -31,3 +31,4 @@ No build, test, or lint commands are configured.
 - Streaming responses via `session.promptStreaming()`
 - Single session instance pattern
 - Vanilla JavaScript with marked.js for Markdown rendering
+- Multi-line input with Enter to send, Shift+Enter for newline

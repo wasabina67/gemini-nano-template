@@ -162,7 +162,12 @@ body {
   border: 1px solid #e0e0e0;
   border-radius: 24px;
   font-size: 14px;
+  font-family: inherit;
   outline: none;
+  resize: none;
+  min-height: 44px;
+  max-height: 120px;
+  overflow-y: auto;
 }
 
 .message-input:focus {
