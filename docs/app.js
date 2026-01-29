@@ -16,7 +16,11 @@ const submitButton = document.getElementById('submit-button');
 function addMessage(text, isUser) {
   const messageDiv = document.createElement('div');
   messageDiv.className = isUser ? 'message user-message' : 'message ai-message';
-  messageDiv.textContent = text;
+  if (isUser) {
+    messageDiv.textContent = text;
+  } else {
+    messageDiv.innerHTML = marked.parse(text);
+  }
   chatMessages.appendChild(messageDiv);
   chatMessages.scrollTop = chatMessages.scrollHeight;
   return messageDiv;
@@ -37,12 +41,14 @@ async function handleSubmit(e) {
 
   try {
     const stream = session.promptStreaming(text);
+    let fullText = '';
     for await (const chunk of stream) {
-      responseDiv.textContent += chunk;
+      fullText += chunk;
+      responseDiv.innerHTML = marked.parse(fullText);
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
   } catch (error) {
-    responseDiv.textContent = 'Error: ' + error.message;
+    responseDiv.innerHTML = marked.parse('Error: ' + error.message);
     console.error(error);
   } finally {
     messageInput.disabled = false;

@@ -30,4 +30,4 @@ No build, test, or lint commands are configured.
 - Configured for Japanese language (`ja`)
 - Streaming responses via `session.promptStreaming()`
 - Single session instance pattern
-- Pure vanilla JavaScript (no frameworks)
+- Vanilla JavaScript with marked.js for Markdown rendering
