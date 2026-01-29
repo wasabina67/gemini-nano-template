@@ -3,6 +3,7 @@ const LANGUAGE_OPTIONS = {
   expectedInputs: [{ type: 'text', languages: [LANGUAGE] }],
   expectedOutputs: [{ type: 'text', languages: [LANGUAGE] }],
 };
+const SYSTEM_PROMPT = 'あなたは親切で丁寧な日本語アシスタントです。語尾に自然に「だっちゃ」と言います。';
 
 let session = null;
 
@@ -77,6 +78,7 @@ async function createSession() {
   try {
     session = await LanguageModel.create({
       ...LANGUAGE_OPTIONS,
+      initialPrompts: [{ role: 'system', content: SYSTEM_PROMPT }],
       monitor(m) {
         m.addEventListener('downloadprogress', (e) => {
           status.textContent = `Downloading: ${Math.round(e.loaded * 100)}%`;
