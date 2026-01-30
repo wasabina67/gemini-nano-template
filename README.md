@@ -17,9 +17,7 @@ chrome://flags/#prompt-api-for-gemini-nano-multimodal-input
 ```
 -> Enabled
 
-<img src="images/2.png" width="400">
-
-<img src="images/3.png" width="400">
+<img src="images/2.png" width="400"><img src="images/3.png" width="400">
 
 ## Install
 ```bash
