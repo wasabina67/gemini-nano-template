@@ -3,7 +3,12 @@ Gemini Nano template
 
 [The Prompt API  |  AI on Chrome  |  Chrome for Developers](https://developer.chrome.com/docs/ai/prompt-api)
 
+<details>
+<summary>Demo</summary>
+
 https://github.com/user-attachments/assets/83616137-bfe3-435a-9606-d01c75461733
+
+</details>
 
 ## Setup
 <img src="images/1.png" width="400">
